@@ -123,7 +123,14 @@ module TrueVault
       self.class.get("/#{@api_ver}/vaults/#{vault_id}/blobs/#{blob_id}", options)
     end
 
+    #####################################
+    ### Healtch Check API Methods
+    #####################################
+
+    def health_check(options = {:headers => {"Content-Type"=>"application/octet-stream"}})
+      options.merge!(default_options_to_merge_with)
+      self.class.get("/#{@api_ver}", options)
+    end
+
   end
-
-
 end

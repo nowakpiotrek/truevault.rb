@@ -29,6 +29,30 @@ describe TrueVault::Client do
     end
   end
 
+  describe "health check" do
+    let(:health_check) { real_client.health_check }
+
+    before do
+      VCR.insert_cassette 'health_check'
+    end
+
+    after do
+      VCR.eject_cassette
+    end
+
+    it "must parse the API response from JSON to a Ruby Hash" do
+      health_check.must_be_instance_of Hash
+    end
+
+    it "must have been a successful API request" do
+      health_check['result'].must_equal "success"
+    end
+
+    it "must have a hello message in the API request" do
+      health_check['message'].must_equal "Hello from API."
+    end
+  end
+
   describe "list vaults" do
     let(:list_vaults){ real_client.list_vaults}
 
