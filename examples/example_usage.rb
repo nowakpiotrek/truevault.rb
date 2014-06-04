@@ -41,14 +41,17 @@ puts "  => #{create_blob} \n\n\n"
 
 puts "get that BLOB:"
 get_blob = tv.get_blob(TV_A_VAULT_ID, create_blob["blob_id"])
+puts "  => file size: #{get_blob.size}\n"
 puts "  => #{get_blob} \n\n\n"
 
 puts "update that BLOB:"
+file.rewind
 update_blob = tv.replace_blob(TV_A_VAULT_ID, create_blob["blob_id"], file)
 puts "  => #{update_blob} \n\n\n"
 
 puts "get that BLOB (again):"
 get_blob2 = tv.get_blob(TV_A_VAULT_ID, create_blob["blob_id"])
+puts "  => file size: #{get_blob2.size}\n"
 puts "  => #{get_blob2} \n\n\n"
 
 puts "delete that BLOB:"

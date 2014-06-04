@@ -35,7 +35,7 @@ module TrueVault
   end
 
   class Client
-    include HTTParty
+    include HTTMultiParty
     require 'json'
     require 'base64'
 
@@ -101,15 +101,15 @@ module TrueVault
     ### BLOB (binary file) API Methods
     #####################################
 
-    def create_blob(vault_id, file, options = {:headers => {"Content-Type"=>"application/octet-stream"}})
+    def create_blob(vault_id, file, options = {})
       options.merge!(default_options_to_merge_with)
-      options[:body] = file.read
+      options[:query] = { :file => file }
       self.class.post("/#{@api_ver}/vaults/#{vault_id}/blobs", options)
     end
 
-    def replace_blob(vault_id, blob_id, file, options = {:headers => {"Content-Type"=>"application/octet-stream"}})
+    def replace_blob(vault_id, blob_id, file, options = {})
       options.merge!(default_options_to_merge_with)
-      options[:body] = file.read
+      options[:query] = { :file => file }
       self.class.put("/#{@api_ver}/vaults/#{vault_id}/blobs/#{blob_id}", options)
     end
 
